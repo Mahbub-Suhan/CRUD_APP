@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRUD_APP.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    [Migration("20250313120242_InitialCreate")]
+    [Migration("20250314044914_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -38,7 +38,8 @@ namespace CRUD_APP.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<int>("StockQuantity")
                         .HasColumnType("int");

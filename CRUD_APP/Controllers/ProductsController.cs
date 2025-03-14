@@ -91,23 +91,26 @@ namespace CRUD_APP.Controllers
 
         // POST: Products/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] // Ensure anti-forgery token validation
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return Json(new { success = false, message = "Product not found." });
-            }
-
             try
             {
+                var product = await _context.Products.FindAsync(id);
+                if (product == null)
+                {
+                    return Json(new { success = false, message = "Product not found." });
+                }
+
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
                 return Json(new { success = true });
             }
             catch (Exception ex)
             {
+                // Log the exception for debugging
+                Console.WriteLine($"Error deleting product: {ex.Message}");
+                Console.WriteLine($"Stack Trace: {ex.StackTrace}");
                 return Json(new { success = false, message = ex.Message });
             }
         }
